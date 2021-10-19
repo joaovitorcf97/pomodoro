@@ -15,11 +15,11 @@ class CronometroBotao extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: Colors.black,
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           vertical: 16,
           horizontal: 24,
         ),
-        textStyle: TextStyle(fontSize: 16),
+        textStyle: const TextStyle(fontSize: 16),
       ),
       onPressed: () {},
       child: Row(
