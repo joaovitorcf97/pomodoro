@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:mobx/mobx.dart';
+import 'package:pomodoro/notificacao_local.dart';
 part 'pomodoro.store.g.dart';
 
 class PomodoroStore = _PomodoroStore with _$PomodoroStore;
@@ -30,7 +31,7 @@ abstract class _PomodoroStore with Store {
   @action
   void iniciar() {
     iniciado = true;
-    cronometro = Timer.periodic(const Duration(seconds: 1), (timer) {
+    cronometro = Timer.periodic(const Duration(milliseconds: 50), (timer) {
       if (minutos == 0 && segundos == 0) {
         _trocarTipoIntervalo();
       } else if (segundos == 0) {
@@ -103,9 +104,17 @@ abstract class _PomodoroStore with Store {
     if (estaTrabalhando()) {
       tipoIntervalo = TipoIntervalo.DESCANSO;
       minutos = tempoDescanso;
+      NotificacaoLocal.mostrarNotificacao(
+        title: 'Tempo de trabalho terminado',
+        body: 'clique para abrir a nova pagina',
+      );
     } else {
       tipoIntervalo = TipoIntervalo.TRABALHO;
       minutos = tempoTrabalho;
+      NotificacaoLocal.mostrarNotificacao(
+        title: 'Tempo de Descanso terminado',
+        body: 'clique para abrir a nova pagina',
+      );
     }
 
     segundos = 0;
